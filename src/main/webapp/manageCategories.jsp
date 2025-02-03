@@ -24,8 +24,8 @@
     %>
         <p>
             <b>Category Name:</b> <%= category.getName() %><br>
-            <a href="editCategory.jsp?id=<%= category.getId() %>">Edit</a> | 
-            <a href="deleteCategoryServlet?id=<%= category.getId() %>" onclick="return confirm('Are you sure?');">Delete</a>
+            <a href="EditCategory.jsp?id=<%= category.getId() %>">Edit</a> | 
+            <a href="DeleteCategoryServlet?id=<%= category.getId() %>" onclick="return confirm('Are you sure?');">Delete</a>
         </p>
         <hr>
     <% } %>
