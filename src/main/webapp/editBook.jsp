@@ -33,7 +33,7 @@
         <input type="text" name="title" value="<%= book.getName() %>" required><br>
  
         <label>Author:</label>
-        <input type="text" name="bookAuthor" value="<%= book.getAuthor() %>" required><br>       
+        <input type="text" name="author" value="<%= book.getAuthor() %>" required><br>       
 
         <label>Price:</label>
         <input type="number" step="0.01" name="bookPrice" value="<%= book.getPrice() %>" required><br>
