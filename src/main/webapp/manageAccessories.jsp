@@ -26,7 +26,7 @@
             <b>Name:</b> <%= accessory.getName() %><br>
             <b>Price:</b> $<%= accessory.getPrice() %><br>
             <a href="editAccessory.jsp?id=<%= accessory.getSerialNo() %>">Edit</a> | 
-            <a href="deleteAccessoryServlet?id=<%= accessory.getSerialNo() %>" onclick="return confirm('Are you sure?');">Delete</a>
+            <a href="DeleteAccessoryServlet?id=<%= accessory.getSerialNo() %>" onclick="return confirm('Are you sure?');">Delete</a>
         </p>
         <hr>
     <% } %>

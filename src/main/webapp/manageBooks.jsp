@@ -27,7 +27,7 @@
             <b>Author:</b> <%= book.getAuthor() %><br>
             <b>Price:</b> $<%= book.getPrice() %><br>
             <a href="editBook.jsp?id=<%= book.getSerialNo() %>">Edit</a> | 
-            <a href="deleteBookServlet?id=<%= book.getSerialNo() %>" onclick="return confirm('Are you sure?');">Delete</a>
+            <a href="DeleteBookServlet?id=<%= book.getSerialNo() %>" onclick="return confirm('Are you sure?');">Delete</a>
         </p>
         <hr>
     <% } %>
