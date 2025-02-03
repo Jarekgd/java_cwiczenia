@@ -27,7 +27,7 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         try (Connection connection = DriverManager.getConnection(DB_URL)) {
-            connection.setAutoCommit(false); // ✅ Begin transaction
+            connection.setAutoCommit(false); 
 
             // Retrieve cart items
             ArrayList<CartItem> cartItems = CartManager.getCart(userLogin);
@@ -107,7 +107,7 @@ public class CheckoutServlet extends HttpServlet {
                     clearCartStmt.executeUpdate();
                 }
 
-                connection.commit(); // ✅ Commit transaction
+                connection.commit(); 
                 response.sendRedirect("customerDashboard.jsp?success=Order placed successfully");
             }
         } catch (Exception e) {

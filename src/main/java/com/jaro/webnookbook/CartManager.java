@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class CartManager {
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
-    // ✅ Get all cart items for a user
     public static ArrayList<CartItem> getCart(String userLogin) {
         ArrayList<CartItem> cartItems = new ArrayList<>();
         try {
@@ -33,7 +32,7 @@ public class CartManager {
         return cartItems;
     }
 
-    // ✅ Add item to cart
+
     public static void addToCart(String userLogin, String serialNo, String name, double price, int quantity) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -74,7 +73,7 @@ public class CartManager {
         }
     }
 
-    // ✅ Update cart item quantity
+
     public static void updateCart(String userLogin, String serialNo, int quantity) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -92,7 +91,6 @@ public class CartManager {
         }
     }
 
-    // ✅ Remove item from cart
     public static void removeFromCart(String userLogin, String serialNo) {
         try {
             Class.forName("org.sqlite.JDBC");

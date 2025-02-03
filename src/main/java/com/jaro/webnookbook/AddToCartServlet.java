@@ -25,7 +25,7 @@ public class AddToCartServlet extends HttpServlet {
         String productType = request.getParameter("productType");
         String quantityParam = request.getParameter("quantity");
 
-        // ✅ Check for null or empty parameters
+
         if (serialNo == null || serialNo.isEmpty() || productType == null || productType.isEmpty() || quantityParam == null || quantityParam.isEmpty()) {
             response.sendRedirect("customerDashboard.jsp?error=Invalid item or quantity");
             return;
@@ -62,7 +62,7 @@ public class AddToCartServlet extends HttpServlet {
                 }
             }
 
-            // ✅ Ensure product exists before adding to cart
+
             if (!productName.isEmpty()) {
                 CartManager.addToCart(userLogin, serialNo, productName, productPrice, quantity);
                 response.sendRedirect("customerCart.jsp?success=Item added to cart");
