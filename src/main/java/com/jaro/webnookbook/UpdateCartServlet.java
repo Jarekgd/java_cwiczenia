@@ -22,14 +22,21 @@ public class UpdateCartServlet extends HttpServlet {
         }
 
         String serialNo = request.getParameter("serialNo");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String quantityParam = request.getParameter("quantity");
 
-        if (quantity > 0) {
-            CartManager.updateCart(userLogin, serialNo, quantity);
-            response.sendRedirect("customerCart.jsp?success=Cart updated successfully");
-        } else {
-            response.sendRedirect("customerCart.jsp?error=Quantity must be at least 1");
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityParam);
+            if (quantity <= 0) {
+                response.sendRedirect("customerCart.jsp?error=Quantity must be at least 1");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            response.sendRedirect("customerCart.jsp?error=Invalid quantity format");
+            return;
         }
+
+        CartManager.updateCart(userLogin, serialNo, quantity);
+        response.sendRedirect("customerCart.jsp?success=Cart updated successfully");
     }
 }
-

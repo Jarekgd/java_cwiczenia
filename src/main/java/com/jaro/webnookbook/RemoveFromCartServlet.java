@@ -31,4 +31,3 @@ public class RemoveFromCartServlet extends HttpServlet {
         }
     }
 }
-

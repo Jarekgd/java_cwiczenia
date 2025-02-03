@@ -21,9 +21,14 @@ public class AddToCartServlet extends HttpServlet {
             return;
         }
 
+        // Retrieve form parameters
         String serialNo = request.getParameter("serialNo");
         String productType = request.getParameter("productType");
         String quantityParam = request.getParameter("quantity");
+
+        System.out.println("DEBUG: SerialNo: " + serialNo);
+        System.out.println("DEBUG: ProductType: " + productType);
+        System.out.println("DEBUG: Quantity (String): " + quantityParam);
 
 
         if (serialNo == null || serialNo.isEmpty() || productType == null || productType.isEmpty() || quantityParam == null || quantityParam.isEmpty()) {
@@ -62,6 +67,8 @@ public class AddToCartServlet extends HttpServlet {
                 }
             }
 
+            System.out.println("DEBUG: Product Name: " + productName);
+            System.out.println("DEBUG: Product Price: " + productPrice);
 
             if (!productName.isEmpty()) {
                 CartManager.addToCart(userLogin, serialNo, productName, productPrice, quantity);
