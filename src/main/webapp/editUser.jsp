@@ -1,15 +1,12 @@
-<%@ page import="com.jaro.webnookbook.UserManager" %>
 <%@ page import="com.jaro.webnookbook.User" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page session="true" %>
 <%
     if (!"Admin".equals(session.getAttribute("userRole"))) {
         response.sendRedirect("login.jsp");
     }
 
-    String userId = request.getParameter("id");
-    User user = UserManager.getUserById(Integer.parseInt(userId));
-
+    // Retrieve user object from request
+    User user = (User) request.getAttribute("user");
     if (user == null) {
         response.sendRedirect("manageUsers.jsp?error=User not found");
         return;
@@ -24,7 +21,8 @@
     <h2>Edit User</h2>
 
     <form action="EditUserServlet" method="post">
-        <input type="hidden" name="userId" value="<%= user.getId() %>">
+        <!-- User ID (hidden) -->
+        <input type="hidden" name="userId" value="<%= request.getAttribute("userId") %>">
 
         <label>Email:</label>
         <input type="email" name="email" value="<%= user.getEmail() %>" required><br>
@@ -37,8 +35,8 @@
 
         <label>Role:</label>
         <select name="role">
-            <option value="Admin" <% if ("Admin".equals(user.getRole())) { %> selected <% } %>>Admin</option>
-            <option value="Customer" <% if ("Customer".equals(user.getRole())) { %> selected <% } %>>Customer</option>
+            <option value="Admin" <% if ("Admin".equals(user.getPrivilege())) { %> selected <% } %>>Admin</option>
+            <option value="Customer" <% if ("Customer".equals(user.getPrivilege())) { %> selected <% } %>>Customer</option>
         </select><br>
 
         <button type="submit">Update User</button>

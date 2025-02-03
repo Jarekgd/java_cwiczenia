@@ -81,18 +81,18 @@ public class UserManager {
     try {
         Class.forName("org.sqlite.JDBC");
         try (Connection connection = DriverManager.getConnection(DB_URL)) {
-            String sql = "SELECT email, userName, login, password, roles.roleName FROM users " +
+            String sql = "SELECT usrId, email, userName, login, password, roles.roleName FROM users " +
                          "JOIN roles ON users.privilege = roles.roleId WHERE usrId = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, userId);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     if (rs.next()) {
                         user = new User(
-                            rs.getString("email"),    
-                            rs.getString("userName"), 
-                            rs.getString("login"),     
-                            rs.getString("password"),  
-                            rs.getString("roleName") 
+                            rs.getString("email"),
+                            rs.getString("userName"),
+                            rs.getString("login"),
+                            rs.getString("password"),
+                            rs.getString("roleName")
                         );
                     }
                 }
@@ -103,6 +103,8 @@ public class UserManager {
     }
     return user;
 }
+
+
 
 
 }
