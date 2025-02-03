@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import static javax.swing.UIManager.getString;
 
 /**
  * UserManager class for handling user-related operations
@@ -75,4 +76,33 @@ public class UserManager {
         }
         return null;  // Return null if login fails
     }
+    public static User getUserById(int userId) {
+    User user = null;
+    try {
+        Class.forName("org.sqlite.JDBC");
+        try (Connection connection = DriverManager.getConnection(DB_URL)) {
+            String sql = "SELECT email, userName, login, password, roles.roleName FROM users " +
+                         "JOIN roles ON users.privilege = roles.roleId WHERE usrId = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setInt(1, userId);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        user = new User(
+                            rs.getString("email"),    
+                            rs.getString("userName"), 
+                            rs.getString("login"),     
+                            rs.getString("password"),  
+                            rs.getString("roleName") 
+                        );
+                    }
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return user;
+}
+
+
 }

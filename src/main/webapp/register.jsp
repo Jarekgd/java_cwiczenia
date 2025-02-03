@@ -13,6 +13,7 @@
     <h2>Register</h2>
 
     <form action="NewUserServlet" method="post">
+
         <label>Email:</label>
         <input type="email" name="email" required><br><br>
 

@@ -10,34 +10,36 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/NewUserServlet")  // ✅ Must match exactly
-public class NewUserServlet extends HttpServlet {
+@WebServlet("/EditUserServlet")
+public class EditUserServlet extends HttpServlet {
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
         String email = request.getParameter("email");
         String userName = request.getParameter("userName");
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String role = request.getParameter("role");
 
         try {
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(DB_URL)) {
-                String sql = "INSERT INTO users (email, userName, login, password, privilege) VALUES (?, ?, ?, ?, (SELECT roleId FROM roles WHERE roleName = 'Customer'))";
+                String sql = "UPDATE users SET email = ?, userName = ?, login = ?, privilege = (SELECT roleId FROM roles WHERE roleName = ?) WHERE usrId = ?";
                 try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                     pstmt.setString(1, email);
                     pstmt.setString(2, userName);
                     pstmt.setString(3, login);
-                    pstmt.setString(4, password);
+                    pstmt.setString(4, role);
+                    pstmt.setInt(5, userId);
                     pstmt.executeUpdate();
-                    response.sendRedirect("login.jsp?success=Registration successful");
+                    response.sendRedirect("manageUsers.jsp?success=User updated");
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("register.jsp?error=Database error");
+            response.sendRedirect("editUser.jsp?id=" + userId + "&error=Database error");
         }
     }
 }
