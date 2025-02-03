@@ -10,9 +10,6 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/UpdateCartServlet")
 public class UpdateCartServlet extends HttpServlet {
-    private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -25,26 +22,14 @@ public class UpdateCartServlet extends HttpServlet {
         }
 
         String serialNo = request.getParameter("serialNo");
-        int quantity;
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        try {
-            quantity = Integer.parseInt(request.getParameter("quantity"));
-            if (quantity <= 0) {
-                response.sendRedirect("customerCart.jsp?error=Quantity must be at least 1");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            response.sendRedirect("customerCart.jsp?error=Invalid quantity format");
-            return;
-        }
-
-        try {
-            // Update the item quantity in the cart
+        if (quantity > 0) {
             CartManager.updateCart(userLogin, serialNo, quantity);
             response.sendRedirect("customerCart.jsp?success=Cart updated successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("customerCart.jsp?error=Database error");
+        } else {
+            response.sendRedirect("customerCart.jsp?error=Quantity must be at least 1");
         }
     }
 }
+

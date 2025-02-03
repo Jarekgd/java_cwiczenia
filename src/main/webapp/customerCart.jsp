@@ -2,6 +2,7 @@
 <%@ page import="com.jaro.webnookbook.CartItem" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page session="true" %>
+
 <%
     if (!"Customer".equals(session.getAttribute("userRole"))) {
         response.sendRedirect("login.jsp");
@@ -14,7 +15,7 @@
 
 <html>
 <head>
-    <title>Shopping Cart</title>
+    <title>Your Shopping Cart</title>
 </head>
 <body>
     <h2>Your Shopping Cart</h2>

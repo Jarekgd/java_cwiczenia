@@ -10,9 +10,6 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/RemoveFromCartServlet")
 public class RemoveFromCartServlet extends HttpServlet {
-    private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -26,18 +23,12 @@ public class RemoveFromCartServlet extends HttpServlet {
 
         String serialNo = request.getParameter("serialNo");
 
-        if (serialNo == null || serialNo.isEmpty()) {
-            response.sendRedirect("customerCart.jsp?error=Invalid item");
-            return;
-        }
-
-        try {
-            // Remove item from cart
+        if (serialNo != null) {
             CartManager.removeFromCart(userLogin, serialNo);
             response.sendRedirect("customerCart.jsp?success=Item removed successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("customerCart.jsp?error=Database error");
+        } else {
+            response.sendRedirect("customerCart.jsp?error=Invalid item");
         }
     }
 }
+
