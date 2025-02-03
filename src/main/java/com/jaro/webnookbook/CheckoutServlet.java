@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -21,6 +23,7 @@ public class CheckoutServlet extends HttpServlet {
             response.sendRedirect("login.jsp?error=Please log in to proceed with checkout");
             return;
         }
+
 
         ArrayList<CartItem> cartItems = CartManager.getCart(userLogin);
 
@@ -37,6 +40,16 @@ public class CheckoutServlet extends HttpServlet {
         int orderId = OrderManager.createOrder(userLogin, totalAmount, cartItems);
 
         if (orderId > 0) {
+
+            for (CartItem item : cartItems) {
+                if (BookManager.getBookBySerialNo(item.getSerialNo()) != null) {
+                    BookManager.updateBookQuantity(item.getSerialNo(), item.getQuantity());
+                } else if (AccessoryManager.getAccessoryBySerialNo(item.getSerialNo()) != null) {
+                    AccessoryManager.updateAccessoryQuantity(item.getSerialNo(), item.getQuantity());
+                }
+            }
+
+
             CartManager.clearCart(userLogin);
             response.sendRedirect("customerOrders.jsp?success=Order placed successfully");
         } else {

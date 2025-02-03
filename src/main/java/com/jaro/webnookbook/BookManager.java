@@ -71,4 +71,30 @@ public class BookManager {
         }
         return book;
     }
+    public static void updateBookQuantity(String serialNo, int quantityPurchased) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection connection = DriverManager.getConnection(DB_URL)) {
+                String checkSql = "SELECT quantity FROM books WHERE serialNo = ?";
+                try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
+                    checkStmt.setString(1, serialNo);
+                    ResultSet rs = checkStmt.executeQuery();
+                    
+                    if (rs.next()) {
+                        int currentQuantity = rs.getInt("quantity");
+                        int newQuantity = Math.max(0, currentQuantity - quantityPurchased); // Ensure quantity doesn't go negative
+
+                        String updateSql = "UPDATE books SET quantity = ? WHERE serialNo = ?";
+                        try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                            updateStmt.setInt(1, newQuantity);
+                            updateStmt.setString(2, serialNo);
+                            updateStmt.executeUpdate();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
