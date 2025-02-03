@@ -229,4 +229,22 @@
     <url-pattern>/UpdateOrderServlet</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>CustomerOrdersServlet</servlet-name>
+    <servlet-class>com.jaro.webnookbook.CustomerOrdersServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>CustomerOrdersServlet</servlet-name>
+    <url-pattern>/customerOrders.jsp</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>AdminOrdersServlet</servlet-name>
+    <servlet-class>com.jaro.webnookbook.AdminOrdersServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>AdminOrdersServlet</servlet-name>
+    <url-pattern>/adminOrders.jsp</url-pattern>
+</servlet-mapping>
+
 </web-app>
