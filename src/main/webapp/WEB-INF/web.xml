@@ -219,5 +219,14 @@
         <servlet-name>CheckoutServlet</servlet-name>
         <url-pattern>/CheckoutServlet</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <servlet-class>com.jaro.webnookbook.UpdateOrderServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <url-pattern>/UpdateOrderServlet</url-pattern>
+</servlet-mapping>
 
 </web-app>

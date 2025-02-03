@@ -12,9 +12,6 @@ import java.util.ArrayList;
 public class CategoryManager {
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
-    /**
-     * ✅ Retrieves all categories from the database
-     */
     public static ArrayList<Category> getAllCategories() {
         ArrayList<Category> categories = new ArrayList<>();
         try {
@@ -38,9 +35,7 @@ public class CategoryManager {
         return categories;
     }
 
-    /**
-     * ✅ Retrieves a single category by ID
-     */
+
     public static Category getCategoryById(int categoryId) {
         Category category = null;
         try {

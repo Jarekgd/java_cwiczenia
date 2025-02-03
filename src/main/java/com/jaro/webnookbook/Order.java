@@ -5,12 +5,24 @@ public class Order {
     private String userLogin;
     private double totalAmount;
     private String orderDate;
+    private String status;
+
+
+    public Order(int orderId, String userLogin, double totalAmount, String orderDate, String status) {
+        this.orderId = orderId;
+        this.userLogin = userLogin;
+        this.totalAmount = totalAmount;
+        this.orderDate = orderDate;
+        this.status = status;
+    }
+
 
     public Order(int orderId, String userLogin, double totalAmount, String orderDate) {
         this.orderId = orderId;
         this.userLogin = userLogin;
         this.totalAmount = totalAmount;
         this.orderDate = orderDate;
+        this.status = "Pending"; // Default status
     }
 
 
@@ -18,10 +30,8 @@ public class Order {
     public String getUserLogin() { return userLogin; }
     public double getTotalAmount() { return totalAmount; }
     public String getOrderDate() { return orderDate; }
+    public String getStatus() { return status; }
 
 
-    public void setOrderId(int orderId) { this.orderId = orderId; }
-    public void setUserLogin(String userLogin) { this.userLogin = userLogin; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
-    public void setOrderDate(String orderDate) { this.orderDate = orderDate; }
+    public void setStatus(String status) { this.status = status; }
 }

@@ -104,7 +104,6 @@ public class CartManager {
         }
     }
 
-    // ✅ Clear cart after checkout
     public static void clearCart(String userLogin) {
         try {
             Class.forName("org.sqlite.JDBC");
