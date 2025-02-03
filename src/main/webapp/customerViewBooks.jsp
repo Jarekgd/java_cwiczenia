@@ -31,13 +31,14 @@
                 <td><%= book.getSerialNo() %></td>
                 <td><%= book.getName() %></td>
                 <td><%= book.getAuthor() %></td>
-                <td><%= book.getPrice() %></td>
+                <td>$<%= book.getPrice() %></td>
                 <td><%= book.getQuantity() %></td>
                 <td>
                     <% if (book.getQuantity() > 0) { %>
                         <form action="AddToCartServlet" method="post">
                             <input type="hidden" name="productType" value="book">
                             <input type="hidden" name="serialNo" value="<%= book.getSerialNo() %>">
+                            <input type="number" name="quantity" value="1" min="1">
                             <button type="submit">Add to Cart</button>
                         </form>
                     <% } else { %>

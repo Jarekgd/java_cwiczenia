@@ -29,13 +29,14 @@
             <tr>
                 <td><%= accessory.getSerialNo() %></td>
                 <td><%= accessory.getName() %></td>
-                <td><%= accessory.getPrice() %></td>
+                <td>$<%= accessory.getPrice() %></td>
                 <td><%= accessory.getQuantity() %></td>
                 <td>
                     <% if (accessory.getQuantity() > 0) { %>
                         <form action="AddToCartServlet" method="post">
                             <input type="hidden" name="productType" value="accessory">
                             <input type="hidden" name="serialNo" value="<%= accessory.getSerialNo() %>">
+                            <input type="number" name="quantity" value="1" min="1">
                             <button type="submit">Add to Cart</button>
                         </form>
                     <% } else { %>
