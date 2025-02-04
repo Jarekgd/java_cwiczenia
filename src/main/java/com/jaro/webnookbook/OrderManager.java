@@ -118,31 +118,34 @@ public class OrderManager {
         return orderItems;
     }
     public static ArrayList<Order> getUserOrders(String userLogin) {
-        ArrayList<Order> orders = new ArrayList<>();
-        try {
-            Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(DB_URL)) {
-                String sql = "SELECT orderId, userLogin, totalAmount, orderDate, status FROM orders WHERE userLogin = ? ORDER BY orderDate DESC";
-                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                    pstmt.setString(1, userLogin);
-                    try (ResultSet rs = pstmt.executeQuery()) {
-                        while (rs.next()) {
-                            orders.add(new Order(
-                                rs.getInt("orderId"),
-                                rs.getString("userLogin"),
-                                rs.getDouble("totalAmount"),
-                                rs.getString("orderDate"),
-                                rs.getString("status")
-                            ));
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    ArrayList<Order> orders = new ArrayList<>();
+    try {
+        Connection connection = DriverManager.getConnection(DB_URL);
+        String sql = "SELECT * FROM orders WHERE userLogin = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userLogin);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            orders.add(new Order(
+                rs.getInt("orderId"),
+                rs.getString("userLogin"),
+                rs.getDouble("totalAmount"),
+                rs.getString("orderDate"),
+                rs.getString("status")  // Make sure status is being retrieved correctly
+            ));
         }
-        return orders;
+
+        rs.close();
+        pstmt.close();
+        connection.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return orders;
+}
+
 
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> orders = new ArrayList<>();

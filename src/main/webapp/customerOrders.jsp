@@ -1,46 +1,36 @@
-<%@ page import="com.jaro.webnookbook.OrderManager" %>
-<%@ page import="com.jaro.webnookbook.Order" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.jaro.webnookbook.Order, java.util.ArrayList" %>
 <%@ page session="true" %>
 
 <%
-    if (session.getAttribute("userLogin") == null) {
-        response.sendRedirect("login.jsp");
+    String userLogin = (String) session.getAttribute("userLogin");
+    if (userLogin == null) {
+        response.sendRedirect("login.jsp?error=Please log in to view orders");
         return;
     }
 
-    String userLogin = (String) session.getAttribute("userLogin");
-    ArrayList<Order> orders = OrderManager.getUserOrders(userLogin);
+    ArrayList<Order> orders = (ArrayList<Order>) request.getAttribute("orders");
+    if (orders == null) orders = new ArrayList<>();
 %>
 
-<html>
-<head>
-    <title>My Orders</title>
-</head>
-<body>
-    <h2>My Order History</h2>
+<h2>Order History</h2>
 
+<% if (orders.isEmpty()) { %>
+    <p>No orders found.</p>
+<% } else { %>
     <table border="1">
         <tr>
             <th>Order ID</th>
             <th>Total Amount</th>
             <th>Order Date</th>
             <th>Status</th>
-            <th>Details</th>
         </tr>
-
         <% for (Order order : orders) { %>
         <tr>
             <td><%= order.getOrderId() %></td>
             <td>$<%= order.getTotalAmount() %></td>
             <td><%= order.getOrderDate() %></td>
             <td><%= order.getStatus() %></td>
-            <td><a href="viewOrderDetails.jsp?orderId=<%= order.getOrderId() %>">View</a></td>
         </tr>
         <% } %>
-
     </table>
-
-    <a href="customerDashboard.jsp">Back to Dashboard</a>
-</body>
-</html>
+<% } %>
