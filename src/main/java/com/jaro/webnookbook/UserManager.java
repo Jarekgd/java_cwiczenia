@@ -103,8 +103,43 @@ public class UserManager {
     }
     return user;
 }
+public static double getUserBalance(String userLogin) {
+        double balance = 0.0;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection connection = DriverManager.getConnection(DB_URL)) {
+                String sql = "SELECT balance FROM users WHERE login = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setString(1, userLogin);
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                        if (rs.next()) {
+                            balance = rs.getDouble("balance");
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return balance;
+    }
 
-
-
-
+    // ✅ Update user's virtual bank balance
+    public static void updateUserBalance(String userLogin, double newBalance) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection connection = DriverManager.getConnection(DB_URL)) {
+                String sql = "UPDATE users SET balance = ? WHERE login = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setDouble(1, newBalance);
+                    pstmt.setString(2, userLogin);
+                    pstmt.executeUpdate();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

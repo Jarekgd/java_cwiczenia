@@ -32,14 +32,29 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
+
         double totalAmount = 0.0;
         for (CartItem item : cartItems) {
             totalAmount += item.getPrice() * item.getQuantity();
         }
 
+
+        double userBalance = UserManager.getUserBalance(userLogin);
+        if (userBalance < totalAmount) {
+            response.sendRedirect("customerCart.jsp?error=Insufficient balance");
+            return;
+        }
+
+
         int orderId = OrderManager.createOrder(userLogin, totalAmount, cartItems);
 
         if (orderId > 0) {
+
+            UserManager.updateUserBalance(userLogin, userBalance - totalAmount);
+
+
+            OrderManager.updateOrderStatus(orderId, "Confirmed");
+
 
             for (CartItem item : cartItems) {
                 if (BookManager.getBookBySerialNo(item.getSerialNo()) != null) {
@@ -48,7 +63,6 @@ public class CheckoutServlet extends HttpServlet {
                     AccessoryManager.updateAccessoryQuantity(item.getSerialNo(), item.getQuantity());
                 }
             }
-
 
             CartManager.clearCart(userLogin);
             response.sendRedirect("customerOrders.jsp?success=Order placed successfully");
